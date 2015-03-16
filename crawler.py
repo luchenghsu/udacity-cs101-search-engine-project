@@ -1,4 +1,4 @@
-
+import operator
 
 def union(p, q):
     for e in q:
@@ -206,13 +206,35 @@ def add_page_to_index(index, url, content):
     pages = content.split()
     for page in pages:
         add_to_index(index, page, url)    
-"""
-def lookup(index, keyword):
+
+def search(index, keyword):
     if keyword in index:
         return index[keyword]
     return None    
-"""    
-        
+
+def lucky_search(index, ranks, keyword):
+    all_search_result = search(index, keyword)
+    
+    if len(all_search_result) == 0: return None
+    
+    page_rank_dic = {}
+    for item in all_search_result:
+        page_rank_dic[item] = ranks[item]
+    highest_rank = max(page_rank_dic.values())        
+    return page_rank_dic.keys()[page_rank_dic.values().index(highest_rank)]        
+
+
+def all_search(index, ranks, keyword):
+    all_search_result = search(index, keyword)    
+    if len(all_search_result) == 0: return None
+
+    page_rank_dic = {}
+    for item in all_search_result:
+        page_rank_dic[item] = ranks[item]
+
+    sorted_pages = sorted(page_rank_dic.items(), key = operator.itemgetter(1), reverse=True)
+    
+    return  [item[0] for item in sorted_pages] 
 
 class Crawler:
     

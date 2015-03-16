@@ -1,12 +1,12 @@
-from crawler import Crawler
+#from crawler import Crawler
+import crawler
 
 
-def lookup(index, keyword):
-    if keyword in index:
-        return index[keyword]
-    return None 
-
-c = Crawler('http://udacity.com/cs101x/urank/index.html')
+c = crawler.Crawler('http://udacity.com/cs101x/urank/index.html')
 index, graph = c.crawl_web()
-print lookup(index, "everything")
+ranks = crawler.compute_ranks(graph)
+keyword = raw_input("Input the keyword: ")
+
+print crawler.lucky_search(index, ranks, keyword)
+print crawler.all_search(index, ranks, keyword)
 

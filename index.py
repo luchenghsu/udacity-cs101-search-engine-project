@@ -18,13 +18,13 @@ def compute_ranks(graph):
     d = 0.8 # damping factor
     numloops = 10
     
-    ranks = {}
+    ranks = {}  # ranks at time t-1
     npages = len(graph)
     for page in graph:
         ranks[page] = 1.0 / npages
     
     for i in range(0, numloops):
-        newranks = {}
+        newranks = {} # ranks at time t
         for page in graph:
             newrank = (1 - d) / npages
            
